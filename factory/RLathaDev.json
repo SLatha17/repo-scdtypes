@@ -1,0 +1,15 @@
+{
+	"name": "RLathaDev",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "3956c139-0751-4b19-95d9-2578d9f11942",
+		"tenantId": "b8a2f596-7065-4946-b671-dfc8135ff465"
+	}
+}
