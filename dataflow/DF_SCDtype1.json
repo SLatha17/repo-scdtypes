@@ -19,13 +19,40 @@
 					"name": "SourceSQL"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_SCD1",
+						"type": "DatasetReference"
+					},
+					"name": "UpdatedSink"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_SCD1",
+						"type": "DatasetReference"
+					},
+					"name": "InsertSink"
+				}
+			],
 			"transformations": [
 				{
 					"name": "LookupSCD"
 				},
 				{
 					"name": "UpdatedRows"
+				},
+				{
+					"name": "Updated"
+				},
+				{
+					"name": "Insert"
+				},
+				{
+					"name": "AlterRowUpdated"
+				},
+				{
+					"name": "AlterRowInsert"
 				}
 			],
 			"scriptLines": [
@@ -57,7 +84,45 @@
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> LookupSCD",
 				"LookupSCD split(equals(ID,toString(Cust_ID)),",
-				"     disjoint: false) ~> UpdatedRows@(UpdatedRows, InsertRows)"
+				"     disjoint: false) ~> UpdatedRows@(UpdatedRows, InsertRows)",
+				"UpdatedRows@UpdatedRows derive(LastUpdate = currentTimestamp()) ~> Updated",
+				"UpdatedRows@InsertRows derive(LastUpdate = currentTimestamp()) ~> Insert",
+				"Updated alterRow(updateIf(equals(ID, toString(Cust_ID)))) ~> AlterRowUpdated",
+				"Insert alterRow(insertIf(isNull(ID))) ~> AlterRowInsert",
+				"AlterRowUpdated sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Cust_ID as integer,",
+				"          Name as string,",
+				"          City as string,",
+				"          Phone as integer,",
+				"          Email as string,",
+				"          Segment as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> UpdatedSink",
+				"AlterRowInsert sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Cust_ID as integer,",
+				"          Name as string,",
+				"          City as string,",
+				"          Phone as integer,",
+				"          Email as string,",
+				"          Segment as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> InsertSink"
 			]
 		}
 	}
