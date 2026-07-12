@@ -11,6 +11,9 @@
 		"AzureSqlDatabase1_password": {
 			"value": ""
 		},
+		"AzureSqlDatabase2_password": {
+			"value": ""
+		},
 		"LS_BLOB_BinaryText_connectionString": {
 			"value": ""
 		},
@@ -20,13 +23,37 @@
 		"LS_Binary_ADLS_accountKey": {
 			"value": ""
 		},
+		"LS_Blob_SCD1_connectionString": {
+			"value": ""
+		},
+		"LS_Blob_SCDT1_connectionString": {
+			"value": ""
+		},
 		"LS_Multiple_connectionString": {
 			"value": ""
 		},
 		"LS_Output_CSV_accountKey": {
 			"value": ""
 		},
+		"LS_SCD_ADLS_accountKey": {
+			"value": ""
+		},
+		"LS_SCD_BlobSource_connectionString": {
+			"value": ""
+		},
+		"LS_SCd_connectionString": {
+			"value": ""
+		},
+		"LS_SHIR_SQL_password": {
+			"value": ""
+		},
 		"LS_SINK_RESTAPI_Parquet_accountKey": {
+			"value": ""
+		},
+		"LS_SINK_RestAPI_accountKey": {
+			"value": ""
+		},
+		"LS_SQL_SCD_password": {
 			"value": ""
 		},
 		"AzureSqlDatabase1_properties_typeProperties_server": {
@@ -38,14 +65,50 @@
 		"AzureSqlDatabase1_properties_typeProperties_userName": {
 			"value": "srlatha"
 		},
+		"AzureSqlDatabase2_properties_typeProperties_server": {
+			"value": "adminlatha.database.windows.net"
+		},
+		"AzureSqlDatabase2_properties_typeProperties_database": {
+			"value": "free-sql-db-2969701"
+		},
+		"AzureSqlDatabase2_properties_typeProperties_userName": {
+			"value": "srlatha"
+		},
 		"LS_Binary_ADLS_properties_typeProperties_url": {
 			"value": "https://slathaadlsstorageaccount.dfs.core.windows.net/"
 		},
 		"LS_Output_CSV_properties_typeProperties_url": {
 			"value": "https://slathaadlsstorageaccount.dfs.core.windows.net/"
 		},
+		"LS_RestService_properties_typeProperties_url": {
+			"value": "https://jsonplaceholder.typicode.com/users"
+		},
+		"LS_SCD_ADLS_properties_typeProperties_url": {
+			"value": "https://slathaadlsstorageaccount.dfs.core.windows.net/"
+		},
+		"LS_SHIR_SQL_properties_typeProperties_server": {
+			"value": "localhost\\SQLEXPRESS"
+		},
+		"LS_SHIR_SQL_properties_typeProperties_database": {
+			"value": "TRAINING"
+		},
+		"LS_SHIR_SQL_properties_typeProperties_userName": {
+			"value": "Siri_Sam"
+		},
 		"LS_SINK_RESTAPI_Parquet_properties_typeProperties_url": {
 			"value": "https://slathaadlsstorageaccount.dfs.core.windows.net/"
+		},
+		"LS_SINK_RestAPI_properties_typeProperties_url": {
+			"value": "https://slathaadlsstorageaccount.dfs.core.windows.net/"
+		},
+		"LS_SQL_SCD_properties_typeProperties_server": {
+			"value": "adminlatha.database.windows.net"
+		},
+		"LS_SQL_SCD_properties_typeProperties_database": {
+			"value": "free-sql-db-2969701"
+		},
+		"LS_SQL_SCD_properties_typeProperties_userName": {
+			"value": "srlatha"
 		},
 		"containerUri": {
 			"value": ""

@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
 		},
+		"AzureSqlDatabase2_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabase2'"
+		},
 		"LS_BLOB_BinaryText_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LS_BLOB_BinaryText'"
@@ -27,6 +31,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_Binary_ADLS'"
 		},
+		"LS_Blob_SCD1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_Blob_SCD1'"
+		},
+		"LS_Blob_SCDT1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_Blob_SCDT1'"
+		},
 		"LS_Multiple_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LS_Multiple'"
@@ -35,9 +47,33 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_Output_CSV'"
 		},
+		"LS_SCD_ADLS_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_SCD_ADLS'"
+		},
+		"LS_SCD_BlobSource_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_SCD_BlobSource'"
+		},
+		"LS_SCd_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_SCd'"
+		},
+		"LS_SHIR_SQL_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LS_SHIR_SQL'"
+		},
 		"LS_SINK_RESTAPI_Parquet_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_SINK_RESTAPI_Parquet'"
+		},
+		"LS_SINK_RestAPI_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_SINK_RestAPI'"
+		},
+		"LS_SQL_SCD_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LS_SQL_SCD'"
 		},
 		"AzureSqlDatabase1_properties_typeProperties_server": {
 			"type": "string",
@@ -51,6 +87,18 @@
 			"type": "string",
 			"defaultValue": "srlatha"
 		},
+		"AzureSqlDatabase2_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "adminlatha.database.windows.net"
+		},
+		"AzureSqlDatabase2_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "free-sql-db-2969701"
+		},
+		"AzureSqlDatabase2_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "srlatha"
+		},
 		"LS_Binary_ADLS_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://slathaadlsstorageaccount.dfs.core.windows.net/"
@@ -59,9 +107,45 @@
 			"type": "string",
 			"defaultValue": "https://slathaadlsstorageaccount.dfs.core.windows.net/"
 		},
+		"LS_RestService_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://jsonplaceholder.typicode.com/users"
+		},
+		"LS_SCD_ADLS_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://slathaadlsstorageaccount.dfs.core.windows.net/"
+		},
+		"LS_SHIR_SQL_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "localhost\\SQLEXPRESS"
+		},
+		"LS_SHIR_SQL_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "TRAINING"
+		},
+		"LS_SHIR_SQL_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "Siri_Sam"
+		},
 		"LS_SINK_RESTAPI_Parquet_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://slathaadlsstorageaccount.dfs.core.windows.net/"
+		},
+		"LS_SINK_RestAPI_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://slathaadlsstorageaccount.dfs.core.windows.net/"
+		},
+		"LS_SQL_SCD_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "adminlatha.database.windows.net"
+		},
+		"LS_SQL_SCD_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "free-sql-db-2969701"
+		},
+		"LS_SQL_SCD_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "srlatha"
 		},
 		"containerUri": {
 			"type": "string",
@@ -96,6 +180,9 @@
 					"AzureSqlDatabase1_password": {
 						"value": "[parameters('AzureSqlDatabase1_password')]"
 					},
+					"AzureSqlDatabase2_password": {
+						"value": "[parameters('AzureSqlDatabase2_password')]"
+					},
 					"LS_BLOB_BinaryText_connectionString": {
 						"value": "[parameters('LS_BLOB_BinaryText_connectionString')]"
 					},
@@ -105,14 +192,35 @@
 					"LS_Binary_ADLS_accountKey": {
 						"value": "[parameters('LS_Binary_ADLS_accountKey')]"
 					},
+					"LS_Blob_SCD1_connectionString": {
+						"value": "[parameters('LS_Blob_SCD1_connectionString')]"
+					},
+					"LS_Blob_SCDT1_connectionString": {
+						"value": "[parameters('LS_Blob_SCDT1_connectionString')]"
+					},
 					"LS_Multiple_connectionString": {
 						"value": "[parameters('LS_Multiple_connectionString')]"
 					},
 					"LS_Output_CSV_accountKey": {
 						"value": "[parameters('LS_Output_CSV_accountKey')]"
 					},
+					"LS_SCD_ADLS_accountKey": {
+						"value": "[parameters('LS_SCD_ADLS_accountKey')]"
+					},
+					"LS_SCD_BlobSource_connectionString": {
+						"value": "[parameters('LS_SCD_BlobSource_connectionString')]"
+					},
+					"LS_SCd_connectionString": {
+						"value": "[parameters('LS_SCd_connectionString')]"
+					},
 					"LS_SINK_RESTAPI_Parquet_accountKey": {
 						"value": "[parameters('LS_SINK_RESTAPI_Parquet_accountKey')]"
+					},
+					"LS_SINK_RestAPI_accountKey": {
+						"value": "[parameters('LS_SINK_RestAPI_accountKey')]"
+					},
+					"LS_SQL_SCD_password": {
+						"value": "[parameters('LS_SQL_SCD_password')]"
 					},
 					"AzureSqlDatabase1_properties_typeProperties_server": {
 						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]"
@@ -123,14 +231,41 @@
 					"AzureSqlDatabase1_properties_typeProperties_userName": {
 						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]"
 					},
+					"AzureSqlDatabase2_properties_typeProperties_server": {
+						"value": "[parameters('AzureSqlDatabase2_properties_typeProperties_server')]"
+					},
+					"AzureSqlDatabase2_properties_typeProperties_database": {
+						"value": "[parameters('AzureSqlDatabase2_properties_typeProperties_database')]"
+					},
+					"AzureSqlDatabase2_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSqlDatabase2_properties_typeProperties_userName')]"
+					},
 					"LS_Binary_ADLS_properties_typeProperties_url": {
 						"value": "[parameters('LS_Binary_ADLS_properties_typeProperties_url')]"
 					},
 					"LS_Output_CSV_properties_typeProperties_url": {
 						"value": "[parameters('LS_Output_CSV_properties_typeProperties_url')]"
 					},
+					"LS_RestService_properties_typeProperties_url": {
+						"value": "[parameters('LS_RestService_properties_typeProperties_url')]"
+					},
+					"LS_SCD_ADLS_properties_typeProperties_url": {
+						"value": "[parameters('LS_SCD_ADLS_properties_typeProperties_url')]"
+					},
 					"LS_SINK_RESTAPI_Parquet_properties_typeProperties_url": {
 						"value": "[parameters('LS_SINK_RESTAPI_Parquet_properties_typeProperties_url')]"
+					},
+					"LS_SINK_RestAPI_properties_typeProperties_url": {
+						"value": "[parameters('LS_SINK_RestAPI_properties_typeProperties_url')]"
+					},
+					"LS_SQL_SCD_properties_typeProperties_server": {
+						"value": "[parameters('LS_SQL_SCD_properties_typeProperties_server')]"
+					},
+					"LS_SQL_SCD_properties_typeProperties_database": {
+						"value": "[parameters('LS_SQL_SCD_properties_typeProperties_database')]"
+					},
+					"LS_SQL_SCD_properties_typeProperties_userName": {
+						"value": "[parameters('LS_SQL_SCD_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -149,6 +284,18 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"LS_SHIR_SQL_password": {
+						"value": "[parameters('LS_SHIR_SQL_password')]"
+					},
+					"LS_SHIR_SQL_properties_typeProperties_server": {
+						"value": "[parameters('LS_SHIR_SQL_properties_typeProperties_server')]"
+					},
+					"LS_SHIR_SQL_properties_typeProperties_database": {
+						"value": "[parameters('LS_SHIR_SQL_properties_typeProperties_database')]"
+					},
+					"LS_SHIR_SQL_properties_typeProperties_userName": {
+						"value": "[parameters('LS_SHIR_SQL_properties_typeProperties_userName')]"
 					}
 				}
 			},
