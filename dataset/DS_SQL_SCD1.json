@@ -1,0 +1,43 @@
+{
+	"name": "DS_SQL_SCD1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQL_SCD",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "Cust_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Name",
+				"type": "varchar"
+			},
+			{
+				"name": "City",
+				"type": "varchar"
+			},
+			{
+				"name": "Phone",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Email",
+				"type": "varchar"
+			},
+			{
+				"name": "Segment",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Netherlands"
+		}
+	}
+}

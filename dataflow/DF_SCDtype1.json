@@ -1,0 +1,51 @@
+{
+	"name": "DF_SCDtype1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Source_SCD1",
+						"type": "DatasetReference"
+					},
+					"name": "SourceFromADLS"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_SCD1",
+						"type": "DatasetReference"
+					},
+					"name": "SourceSQL"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          ID as string,",
+				"          Name as string,",
+				"          City as string,",
+				"          Phone as string,",
+				"          Email as string,",
+				"          CustomerType as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SourceFromADLS",
+				"source(output(",
+				"          Cust_ID as integer,",
+				"          Name as string,",
+				"          City as string,",
+				"          Phone as integer,",
+				"          Email as string,",
+				"          Segment as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SourceSQL"
+			]
+		}
+	}
+}
