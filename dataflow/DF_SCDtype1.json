@@ -20,7 +20,14 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "LookupSCD"
+				},
+				{
+					"name": "UpdatedData"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          ID as string,",
@@ -44,7 +51,13 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> SourceSQL"
+				"     format: 'table') ~> SourceSQL",
+				"SourceFromADLS, SourceSQL lookup(ID == toString(Cust_ID),",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> LookupSCD",
+				"LookupSCD split(equals(ID,toString(Cust_ID)),",
+				"     disjoint: false) ~> UpdatedData@(SourceFromADLS, SourceSQL)"
 			]
 		}
 	}
