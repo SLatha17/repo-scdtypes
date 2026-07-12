@@ -25,7 +25,7 @@
 					"name": "LookupSCD"
 				},
 				{
-					"name": "UpdatedData"
+					"name": "UpdatedRows"
 				}
 			],
 			"scriptLines": [
@@ -57,7 +57,7 @@
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> LookupSCD",
 				"LookupSCD split(equals(ID,toString(Cust_ID)),",
-				"     disjoint: false) ~> UpdatedData@(SourceFromADLS, SourceSQL)"
+				"     disjoint: false) ~> UpdatedRows@(UpdatedRows, InsertRows)"
 			]
 		}
 	}
