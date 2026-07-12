@@ -1,0 +1,28 @@
+{
+	"name": "DS_SCD",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SCd",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Netherlands_Source.csv",
+				"container": "scd1"
+			},
+			"columnDelimiter": ";",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Cust_ID;Name;City;Phone;Email;Segment",
+				"type": "String"
+			}
+		]
+	}
+}
