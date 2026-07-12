@@ -1,0 +1,129 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_SCD_Source",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_SCD1",
+						"type": "DatasetReference"
+					},
+					"name": "DSSQLSCD"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_SCD1",
+						"type": "DatasetReference"
+					},
+					"name": "UpdatedSink"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_SCD1",
+						"type": "DatasetReference"
+					},
+					"name": "Insertsink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "lookup1"
+				},
+				{
+					"name": "UpdateSource"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "alterRow1Update"
+				},
+				{
+					"name": "alterRow1Insert"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Cust_ID as string,",
+				"          Name as string,",
+				"          City as string,",
+				"          Phone as string,",
+				"          Email as string,",
+				"          Segment as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source(output(",
+				"          Cust_ID as integer,",
+				"          Name as string,",
+				"          City as string,",
+				"          Phone as integer,",
+				"          Email as string,",
+				"          Segment as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> DSSQLSCD",
+				"source1, DSSQLSCD lookup(source1@Cust_ID == toString(DSSQLSCD@Cust_ID),",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1 split(equals(source1@Cust_ID, toString(DSSQLSCD@Cust_ID)),",
+				"     disjoint: false) ~> UpdateSource@(Updated, Insert)",
+				"UpdateSource@Updated derive(LastUpdate = currentTimestamp()) ~> derivedColumn1",
+				"UpdateSource@Insert derive(LastUpdate = currentTimestamp()) ~> derivedColumn2",
+				"derivedColumn1 alterRow(updateIf(true())) ~> alterRow1Update",
+				"derivedColumn2 alterRow(insertIf(true())) ~> alterRow1Insert",
+				"alterRow1Update sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Cust_ID as integer,",
+				"          Name as string,",
+				"          City as string,",
+				"          Phone as integer,",
+				"          Email as string,",
+				"          Segment as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> UpdatedSink",
+				"alterRow1Insert sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Cust_ID as integer,",
+				"          Name as string,",
+				"          City as string,",
+				"          Phone as integer,",
+				"          Email as string,",
+				"          Segment as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Insertsink1"
+			]
+		}
+	}
+}
