@@ -1,0 +1,17 @@
+{
+	"name": "LS_SQL_SCD",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"server": "adminlatha.database.windows.net",
+			"database": "free-sql-db-2969701",
+			"encrypt": "mandatory",
+			"trustServerCertificate": true,
+			"authenticationType": "SQL",
+			"userName": "srlatha",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDFGMkVGRDNELTYwOUYtNDY4OS04N0EwLThFOTdEODNCODVERl9jM2IzNWJhMS01NDUyLTQ2ODAtODhiYS0zMDg5YTEzZjVjZWEiDQp9"
+		}
+	}
+}
