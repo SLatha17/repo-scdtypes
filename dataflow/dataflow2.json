@@ -1,0 +1,75 @@
+{
+	"name": "dataflow2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Source_SCD2",
+						"type": "DatasetReference"
+					},
+					"name": "SCDCSV2"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_SCD2",
+						"type": "DatasetReference"
+					},
+					"name": "SQLSCD2"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "lookup1"
+				},
+				{
+					"name": "Update"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          CustomerID as string,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          Email as string,",
+				"          City as string,",
+				"          Country as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SCDCSV2",
+				"source(output(",
+				"          CustomerID as integer,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          Email as string,",
+				"          City as string,",
+				"          Country as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> SQLSCD2",
+				"SCDCSV2, SQLSCD2 lookup(SCDCSV2@CustomerID == toString(SQLSCD2@CustomerID),",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1 split((\r",
+				"    (SCDCSV2@CustomerID==toString(SQLSCD2@CustomerID))\r",
+				"    &&\r",
+				"   ( (SCDCSV2@FirstName!=SQLSCD2@FirstName) || (SCDCSV2@LastName!=SQLSCD2@LastName) || (SCDCSV2@Email!=SQLSCD2@Email) || (SCDCSV2@City!=SQLSCD2@City) || (SCDCSV2@Country!=SQLSCD2@Country)\r",
+				"\r",
+				"   )\r",
+				"   ),",
+				"     isNull(SQLSCD2@CustomerID),",
+				"     disjoint: false) ~> Update@(Updatedate, Inserted, Unchanged)",
+				"Update@Updatedate derive(LastUpdate = iif(condition, true_expression, false_expression)) ~> derivedColumn1"
+			]
+		}
+	}
+}
