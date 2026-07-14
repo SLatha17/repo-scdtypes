@@ -19,7 +19,22 @@
 					"name": "SQLSCD2"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_SCD2",
+						"type": "DatasetReference"
+					},
+					"name": "UpdatedSink"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_SQL_SCD2",
+						"type": "DatasetReference"
+					},
+					"name": "Insertedsink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "lookup1"
@@ -29,6 +44,15 @@
 				},
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "alterRow1Updated"
+				},
+				{
+					"name": "alterRowInsert"
 				}
 			],
 			"scriptLines": [
@@ -68,7 +92,45 @@
 				"   ),",
 				"     isNull(SQLSCD2@CustomerID),",
 				"     disjoint: false) ~> Update@(Updatedate, Inserted, Unchanged)",
-				"Update@Updatedate derive(LastUpdate = iif(condition, true_expression, false_expression)) ~> derivedColumn1"
+				"Update@Updatedate derive(LastUpdate = currentTimestamp()) ~> derivedColumn1",
+				"Update@Inserted derive(Inserted = currentTimestamp()) ~> derivedColumn2",
+				"derivedColumn1 alterRow(updateIf(true())) ~> alterRow1Updated",
+				"derivedColumn2 alterRow(insertIf(true())) ~> alterRowInsert",
+				"alterRow1Updated sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          CustomerID as integer,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          Email as string,",
+				"          City as string,",
+				"          Country as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:false,",
+				"     updateable:true,",
+				"     upsertable:false,",
+				"     keys:['CustomerID'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> UpdatedSink",
+				"alterRowInsert sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          CustomerID as integer,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          Email as string,",
+				"          City as string,",
+				"          Country as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Insertedsink1"
 			]
 		}
 	}
