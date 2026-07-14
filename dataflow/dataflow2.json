@@ -46,13 +46,13 @@
 					"name": "derivedColumn1"
 				},
 				{
-					"name": "derivedInset"
-				},
-				{
 					"name": "alterRow1Updated"
 				},
 				{
 					"name": "alterRowInsert"
+				},
+				{
+					"name": "derivedColumnInsert"
 				}
 			],
 			"scriptLines": [
@@ -93,9 +93,9 @@
 				"     isNull(SQLSCD2@CustomerID),",
 				"     disjoint: false) ~> Update@(Updatedate, Inserted, Unchanged)",
 				"Update@Updatedate derive(LastUpdate = currentTimestamp()) ~> derivedColumn1",
-				"Update@Inserted derive(LastUpdate = currentTimestamp()) ~> derivedInset",
 				"derivedColumn1 alterRow(updateIf(true())) ~> alterRow1Updated",
-				"derivedInset alterRow(insertIf(true())) ~> alterRowInsert",
+				"derivedColumnInsert alterRow(insertIf(true())) ~> alterRowInsert",
+				"Update@Inserted derive(LastUpdate = currentTimestamp()) ~> derivedColumnInsert",
 				"alterRow1Updated sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
